@@ -109,19 +109,16 @@ function getSuit(card) {
 }
 
 function bestHand(combo) {
-	var h = getHighest(combo);
-	var l = getLowest(combo);
-	var p = getSecondLowest(combo);
-
-	if ((h - l = 5) && (h % 13 > l % 13)) {
-		x = h % 13;
-		if (x == 0) {
-			x = 13;
+	for (var a = 0; a < 2; a++) {
+		for (var b = a+1; b < 3; b++) {
+			for (var c = b+1; c < 4; c++) {
+				for (var d = c+1; d < 5; d++) {
+					for (var e = d+1; e < 6; d++) {
+						console.log(combo[a] + " " + combo[b] + " " + combo[c] + " " + combo[d] + " " + combo[e]);
+					}
+				}
+			}
 		}
 	}
-	else if (((h - p = 4) && (h % 13 = 0) && (l % 13 = 1)) && (h % 13 > l % 13)) {
-		x = 14;
-	}
-	return (80000*x) + getSuit(h);
 
 }
