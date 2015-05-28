@@ -1,4 +1,12 @@
 var cards = [0, 0, 0, 0, 0, 0, 0];
+var straightFlush = 0;
+var fourOfKind = 0;
+var flush = 0;
+var twoPair = 0;
+var royalFlush = 0;
+var oenPair = 0;
+var highCard = 0;
+
 
 function meRoyalFlush() {
 	if (status == 1) {
@@ -91,17 +99,26 @@ function getSuit(card) {
 }
 
 function bestHand(combo) {
+	var max = 0;
 	console.log(combo);
 	for (var a = 0; a <= 2; a++) {
 		for (var b = a+1; b <= 3; b++) {
 			for (var c = b+1; c <= 4; c++) {
 				for (var d = c+1; d <= 5; d++) {
 					for (var e = d+1; e <= 6; e++) {
-						console.log(combo[a] + " " + combo[b] + " " + combo[c] + " " + combo[d] + " " + combo[e]);
+						var value = handValue([combo[a], combo[b], combo[c], combo[d], combo[e]]);
+						if (value > max) {
+							max = value;
+						}
 					}
 				}
 			}
 		}
+	}
+	if (afladldakflajdf) }
+		royalFlush++;
+	if (400000 < max < 1040000) {
+		straightFlush++;
 	}
 	/*var h = getHighest(combo);
 	var l = getLowest(combo);
@@ -118,4 +135,22 @@ function bestHand(combo) {
 	}
 	return (80000*x) + getSuit(h);
 	*/
+}
+
+function sameSuit(hand) {
+	if (hand[0] >= 1 && hand[4] <= 13) {
+		return true;
+	}
+	if (hand[0] >= 14 && hand[4] <= 26) {
+		return true;
+	}
+	if (hand[27] >= 1 && hand[4] <= 39) {
+		return true;
+	}
+	if (hand[0] >= 40 && hand[4] <= 52) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
