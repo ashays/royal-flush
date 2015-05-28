@@ -137,6 +137,16 @@ function bestHand(combo) {
 	*/
 }
 
+function handValue(hand) {
+	hand.sort();
+	var modded = [hand[0]%13, hand[1]%13, hand[2]%13, hand[3]%13, hand[4]%13];
+	// Straight flush
+	if (sameSuit && ((hand[4] - hand[0] == 4) || (hand[4] - hand[0] == 12 && hand[4] - hand[1] == 3))) {
+		console.log("straight flush");
+	} else {
+		console.log("high card " + hand[4]);
+	}
+}
 function sameSuit(hand) {
 	if (hand[0] >= 1 && hand[4] <= 13) {
 		return true;
