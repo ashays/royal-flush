@@ -115,11 +115,11 @@ function bestHand(combo) {
 			}
 		}
 	}
-	if (afladldakflajdf) }
-		royalFlush++;
-	if (400000 < max < 1040000) {
-		straightFlush++;
-	}
+	// if (afladldakflajdf) }
+	// 	royalFlush++;
+	// if (400000 < max < 1040000) {
+	// 	straightFlush++;
+	// }
 	/*var h = getHighest(combo);
 	var l = getLowest(combo);
 	var p = getSecondLowest(combo);
@@ -141,7 +141,7 @@ function handValue(hand) {
 	hand.sort();
 	var modded = [hand[0]%13, hand[1]%13, hand[2]%13, hand[3]%13, hand[4]%13];
 	// Straight flush
-	if (sameSuit && ((hand[4] - hand[0] == 4) || (hand[4] - hand[0] == 12 && hand[4] - hand[1] == 3))) {
+	if (sameSuit(hand) && ((hand[4] - hand[0] == 4) || (hand[4] - hand[0] == 12 && hand[4] - hand[1] == 3))) {
 		console.log("straight flush");
 	} else {
 		console.log("high card " + hand[4]);
