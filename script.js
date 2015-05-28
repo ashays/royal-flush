@@ -151,13 +151,13 @@ function sameSuit(hand) {
 	if (hand[0] >= 1 && hand[4] <= 13) {
 		return true;
 	}
-	if (hand[0] >= 14 && hand[4] <= 26) {
+	else if (hand[0] >= 14 && hand[4] <= 26) {
 		return true;
 	}
-	if (hand[27] >= 1 && hand[4] <= 39) {
+	else if (hand[27] >= 1 && hand[4] <= 39) {
 		return true;
 	}
-	if (hand[0] >= 40 && hand[4] <= 52) {
+	else if (hand[0] >= 40 && hand[4] <= 52) {
 		return true;
 	}
 	else {
