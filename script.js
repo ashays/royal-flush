@@ -19,8 +19,8 @@ var factorial = function(n) {
 }
 
 function makeCombos() {
-	for (var i = 0; i < 1000; i++) {
-		console.log(randomCombo());
+	for (var i = 0; i < 1; i++) {
+		bestHand(randomCombo());
 	}
 }
 
@@ -91,20 +91,19 @@ function getSuit(card) {
 }
 
 function bestHand(combo) {
-<<<<<<< HEAD
-	for (var a = 0; a < 2; a++) {
-		for (var b = a+1; b < 3; b++) {
-			for (var c = b+1; c < 4; c++) {
-				for (var d = c+1; d < 5; d++) {
-					for (var e = d+1; e < 6; d++) {
+	console.log(combo);
+	for (var a = 0; a <= 2; a++) {
+		for (var b = a+1; b <= 3; b++) {
+			for (var c = b+1; c <= 4; c++) {
+				for (var d = c+1; d <= 5; d++) {
+					for (var e = d+1; e <= 6; e++) {
 						console.log(combo[a] + " " + combo[b] + " " + combo[c] + " " + combo[d] + " " + combo[e]);
 					}
 				}
 			}
 		}
 	}
-=======
-	var h = getHighest(combo);
+	/*var h = getHighest(combo);
 	var l = getLowest(combo);
 	var p = getSecondLowest(combo);
 
@@ -118,6 +117,5 @@ function bestHand(combo) {
 		x = 14;
 	}
 	return (80000*x) + getSuit(h);
->>>>>>> origin/master
-
+	*/
 }
