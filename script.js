@@ -1,4 +1,5 @@
 var cards = [0, 0, 0, 0, 0, 0, 0];
+var randomAttempts = 10;
 var straightFlush = 0;
 var fourOfKind = 0;
 var flush = 0;
@@ -20,9 +21,10 @@ var factorial = function(n) {
 }
 
 function makeCombos() {
-	for (var i = 0; i < 1; i++) {
+	for (var i = 0; i < randomAttempts; i++) {
 		updateCounter(bestHand(randomCombo()));
 	}
+	updateProbs();
 }
 
 function updateCounter(num) {
@@ -47,7 +49,19 @@ function updateCounter(num) {
 	} else {
 		highCard++;
 	}
+}
 
+function updateProbs() {
+	$("#royal-flush").text((royalFlush / randomAttempts) * 100);
+	$("#straight-flush").text((straightFlush / randomAttempts) * 100);
+	$("#four-of-a-kind").text((fourOfKind / randomAttempts) * 100);
+	$("#full-house").text((fullHouse / randomAttempts) * 100);
+	$("#flush").text((flush / randomAttempts) * 100);
+	$("#straight").text((straight / randomAttempts) * 100);
+	$("#three-of-a-kind").text((threeOfKind / randomAttempts) * 100);
+	$("#two-pair").text((twoPair / randomAttempts) * 100);
+	$("#pair").text((pair / randomAttempts) * 100);
+	$("#high-card").text((highCard / randomAttempts) * 100);
 }
 
 function randomCombo() {
