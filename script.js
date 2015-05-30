@@ -89,15 +89,21 @@ function handValue(hand) {
 	hand.sort(function(a, b){return a-b});
 	var modded = [hand[0]%13, hand[1]%13, hand[2]%13, hand[3]%13, hand[4]%13];
 	modded.sort(function(a, b){return a-b});
-	var calc = [0,0,0,0,0];
+	debugger
+	var calc = modded.slice(0);
+	for (var i = 0; i <= 4; i++) {
+		if ((calc[i] == 0) || (calc[i] == 1)) {
+			calc[i] += 13;
+		}
+	}
+	calc.sort(function(a, b){return a-b});
 	// Straight flush
 	if (sameSuit(hand) && isStraight(modded)) {
-		if (modded[0] == 0) {
-			console.log("royal flush");			
-			return calc[0] * 80000;
+		console.log("straight flush");
+		if (calc[0] == 2) {
+			return calc[3] * 90000;
 		} else {
-			console.log("straight flush");
-			return calc[4] * 80000;
+			return calc[4] * 90000;
 		}
 	} else if (modded[1] == modded[2] && modded[1] == modded[3] && (modded[1] == modded[0] || modded[1] == modded[4])) {
 		console.log("four of a kind");
@@ -110,7 +116,11 @@ function handValue(hand) {
 		return calc[4] * 250;
 	} else if (isStraight(modded)) {
 		console.log("straight");
-		return calc[4] * 30;
+		if (calc[0] == 2) {
+			return calc[3] * 30;
+		} else {
+			return calc[4] * 30;
+		}
 	} else if ((modded[2] == modded[0] && modded[2] == modded[1]) || (modded[2] == modded[1] && modded[2] == modded[3]) || (modded[2] == modded[3] && modded[2] == modded[4]) ) {
 		console.log("three of a kind");
 		return calc[2] * 4;
@@ -119,16 +129,16 @@ function handValue(hand) {
 		return (1/350) * (calc[3]*169+calc[1] * 13 + (.01) * (calc[0] + calc[1] + calc[2] + calc[3] + calc[4]));
 	} else if (modded[0] == modded[1]) {
 		console.log("pair");
-		return (1/40) * (calc[0] * 4 + calc[4] * 0.1);
+		return (1/60) * (calc[0] * 4 + calc[4] * 0.1);
 	} else if (modded[1] == modded[2]) {
 		console.log("pair");
-		return (1/40) * (calc[1] * 4 + calc[4] * 0.1);
+		return (1/60) * (calc[1] * 4 + calc[4] * 0.1);
 	} else if (modded[2] == modded[3]) {
 		console.log("pair");
-		return (1/40) * (calc[2] * 4 + calc[4] * 0.1);
+		return (1/60) * (calc[2] * 4 + calc[4] * 0.1);
 	} else if (modded[3] == modded[4]) {
 		console.log("pair");
-		return (1/40) * (calc[3] * 4 + calc[2] * 0.1);
+		return (1/60) * (calc[3] * 4 + calc[2] * 0.1);
 	} else {
 		console.log("high card " + hand[4]);
 		return (.01) * calc[4];
