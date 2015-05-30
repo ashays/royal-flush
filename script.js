@@ -4,9 +4,11 @@ var fourOfKind = 0;
 var flush = 0;
 var twoPair = 0;
 var royalFlush = 0;
-var oenPair = 0;
+var pair = 0;
 var highCard = 0;
-
+var fullHouse = 0;
+var straight = 0;
+var threeOfKind = 0;
 
 //recursive
 var factorial = function(n) {
@@ -19,8 +21,33 @@ var factorial = function(n) {
 
 function makeCombos() {
 	for (var i = 0; i < 1; i++) {
-		bestHand(randomCombo());
+		updateCounter(bestHand(randomCombo()));
 	}
+}
+
+function updateCounter(num) {
+	if (num >= min ) {
+		royalFlush++;
+	} else if (num >= min) {
+		straightFlush++;
+	} else if (num >= min) {
+		fourOfKind++;
+	} else if (num >= min) {
+		fullHouse++;
+	} else if (num >= min) {
+		flush++;
+	} else if (num >= min) {
+		straight++;
+	} else if (num >= min) {
+		threeOfKind++;
+	} else if (num >= min) {
+		twoPair++;
+	} else if (num >= min) {
+		pair++;
+	} else num >= min) {
+		highCard++;
+	}
+
 }
 
 function randomCombo() {
@@ -37,57 +64,6 @@ function randomCombo() {
 	return cardCombo;
 }
 
-function getHighest(combo) {
-	max = combo[0];
-	for (var i = 1; i < 7; i++) {
-		if (combo[i] > min) {
-			max = combo[i];
-		}
-	}
-	return max;
-} 
-
-function getLowest(combo) {
-	min = combo[0];
-	for (var i = 1; i < 7; i++) {
-		if (combo[i] < min) {
-			min = combo[i];
-		}
-	}
-	return min;
-}
-
-function getSecondLowest(combo) {
-	min = getLowest(combo);
-	secondLowest = combo[0];
-	for (var i = 0; i < 7; i++) {
-		if (combo[i] == min) {
-			continue;
-		}
-		if (combo[i] < secondLowest) {
-			secondLowest = combo[i];
-		}
-	}
-	return secondLowest;
-}
-
-function getSuit(card) {
-	var suit;
-
-	if (0 < card < 14) {
-		suit = 1;
-	}
-	else if (13 < card < 27) {
-		suit = 2;
-	}
-	else if (26 < card < 40) {
-		suit = 3;
-	}
-	else if (39 < card < 53) {
-		suit = 4;
-	}
-	return suit;
-}
 
 function bestHand(combo) {
 	var max = 0;
@@ -106,26 +82,7 @@ function bestHand(combo) {
 			}
 		}
 	}
-	// if (afladldakflajdf) }
-	// 	royalFlush++;
-	// if (400000 < max < 1040000) {
-	// 	straightFlush++;
-	// }
-	/*var h = getHighest(combo);
-	var l = getLowest(combo);
-	var p = getSecondLowest(combo);
-
-	if ((h - l == 5) && (h % 13 > l % 13)) {
-		x = h % 13;
-		if (x == 0) {
-			x = 13;
-		}
-	}
-	else if (((h - p == 4) && (h % 13 == 0) && (l % 13 == 1)) && (h % 13 > l % 13)) {
-		x = 14;
-	}
-	return (80000*x) + getSuit(h);
-	*/
+	return max;
 }
 
 function handValue(hand) {
