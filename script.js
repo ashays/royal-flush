@@ -8,15 +8,6 @@ var oenPair = 0;
 var highCard = 0;
 
 
-function meRoyalFlush() {
-	if (status == 1) {
-		var usingA, usingB, usingBoth, usingNone;
-		if (CardA.rank > 9 || CardA.rank == 1) { usingA = factorial(47) / factorial(50); }
-		if (CardB.rank > 9 || CardB.rank == 1) { usingA = factorial(47) / factorial(50); }
-		return usingA + usingB + usingBoth + usingNone;
-	}
-}
-
 //recursive
 var factorial = function(n) {
     if(n == 0) {
@@ -138,15 +129,55 @@ function bestHand(combo) {
 }
 
 function handValue(hand) {
-	hand.sort();
+	hand.sort(function(a, b){return a-b});
 	var modded = [hand[0]%13, hand[1]%13, hand[2]%13, hand[3]%13, hand[4]%13];
+	modded.sort(function(a, b){return a-b});
+	var calc = [0,0,0,0,0];
 	// Straight flush
-	if (sameSuit(hand) && ((hand[4] - hand[0] == 4) || (hand[4] - hand[0] == 12 && hand[4] - hand[1] == 3))) {
-		console.log("straight flush");
+	if (sameSuit(hand) && isStraight(modded)) {
+		if (modded[0] == 0) {
+			console.log("royal flush");			
+			return calc[0] * 80000;
+		} else {
+			console.log("straight flush");
+			return calc[4] * 80000;
+		}
+	} else if (modded[1] == modded[2] && modded[1] == modded[3] && (modded[1] == modded[0] || modded[1] == modded[4])) {
+		console.log("four of a kind");
+		return calc[1] * 30000;
+	} else if (modded[0] == modded[1] && modded[3] == modded[4] && (modded[2] == modded[0] || modded[2] == modded[4])) {
+		console.log("full house");
+		return 10 * (calc[4] * 169 + calc[0] * 13);
+	} else if (sameSuit(hand)) {
+		console.log("flush");
+		return calc[4] * 250;
+	} else if (isStraight(modded)) {
+		console.log("straight");
+		return calc[4] * 30;
+	} else if ((modded[2] == modded[0] && modded[2] == modded[1]) || (modded[2] == modded[1] && modded[2] == modded[3]) || (modded[2] == modded[3] && modded[2] == modded[4]) ) {
+		console.log("three of a kind");
+		return calc[2] * 4;
+	} else if ((modded[1] == modded[0] || modded[1] == modded[2]) && (modded[3] == modded[2] || modded[3] == modded[4])) {
+		console.log("two pair");
+		return (1/350) * (calc[3]*169+calc[1] * 13 + (.01) * (calc[0] + calc[1] + calc[2] + calc[3] + calc[4]));
+	} else if (modded[0] == modded[1]) {
+		console.log("pair");
+		return (1/40) * (calc[0] * 4 + calc[4] * 0.1);
+	} else if (modded[1] == modded[2]) {
+		console.log("pair");
+		return (1/40) * (calc[1] * 4 + calc[4] * 0.1);
+	} else if (modded[2] == modded[3]) {
+		console.log("pair");
+		return (1/40) * (calc[2] * 4 + calc[4] * 0.1);
+	} else if (modded[3] == modded[4]) {
+		console.log("pair");
+		return (1/40) * (calc[3] * 4 + calc[2] * 0.1);
 	} else {
 		console.log("high card " + hand[4]);
+		return (.01) * calc[4];
 	}
 }
+
 function sameSuit(hand) {
 	if (hand[0] >= 1 && hand[4] <= 13) {
 		return true;
@@ -163,4 +194,8 @@ function sameSuit(hand) {
 	else {
 		return false;
 	}
+}
+
+function isStraight(hand) {
+	return ((hand[4] - hand[0] == 4) || (hand[4] - hand[0] == 12 && hand[4] - hand[1] == 3) || (hand[4] - hand[0] == 12 && hand[4] - hand[1] == 11 && hand[4] - hand[2] == 2) );
 }
