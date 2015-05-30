@@ -26,25 +26,25 @@ function makeCombos() {
 }
 
 function updateCounter(num) {
-	if (num >= min ) {
+	if (num == 1120000 ) {
 		royalFlush++;
-	} else if (num >= min) {
+	} else if (num >= 450000) {
 		straightFlush++;
-	} else if (num >= min) {
+	} else if (num >= 60000) {
 		fourOfKind++;
-	} else if (num >= min) {
+	} else if (num >= 3770) {
 		fullHouse++;
-	} else if (num >= min) {
+	} else if (num >= 1500) {
 		flush++;
-	} else if (num >= min) {
+	} else if (num >= 150) {
 		straight++;
-	} else if (num >= min) {
+	} else if (num >= 8) {
 		threeOfKind++;
-	} else if (num >= min) {
+	} else if (num >= 1.077) {
 		twoPair++;
-	} else if (num >= min) {
+	} else if (num >= .14167) {
 		pair++;
-	} else num >= min) {
+	} else {
 		highCard++;
 	}
 
