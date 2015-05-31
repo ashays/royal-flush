@@ -1,6 +1,6 @@
 var cards = [0, 0, 0, 0, 0, 0, 0];
 var opponents = 2;
-var randomAttempts = 10000;
+var randomAttempts = 1000;
 
 // Counters
 var straightFlush = 0;
@@ -41,7 +41,7 @@ function randomCombo() {
 		while (cardCombo.indexOf(randCard) != -1) {
 			randCard = Math.floor((Math.random() * 52) + 1);
 		}
-		cardCombo[4 + j] = randCard;
+		cardCombo[7 + j] = randCard;
 	}
 	return cardCombo;
 }
@@ -58,6 +58,12 @@ function winnerCalc(everyone) {
 	} else if (opp > you) {
 		oppWin++;
 	} else {
+		// console.log("your cards: ");
+		// printHand(table.concat([everyone[5], everyone[6]]));
+		// console.log("opp cards: ");
+		// printHand(table.concat([everyone[7 + oppNum], everyone[8 + oppNum]]));
+		// console.log("You " + you + " Opp " + opp);
+		// console.log(" ");
 		noWin++;
 	}
 	return you;
@@ -76,17 +82,19 @@ function updateCounter(num) {
 		flush++;
 	} else if (num >= 150) {
 		straight++;
-	} else if (num >= 8) {
+	} else if (num >= 8.0090) {
 		threeOfKind++;
 	} else if (num >= 1.077) {
 		twoPair++;
-	} else if (num >= .14167) {
+	} else if (num >= .1353) {
 		pair++;
 	} else {
 		highCard++;
 	}
 }
 
+
+// Prints probabilities to status page
 function updateProbs() {
 	$("#royal-flush").text((royalFlush / randomAttempts) * 100);
 	$("#straight-flush").text((straightFlush / randomAttempts) * 100);
@@ -103,6 +111,14 @@ function updateProbs() {
 	$("#no-win").text(Math.floor( 10 * (noWin / randomAttempts) * 100) / 10);
 }
 
+function formatNumber(counter) {
+	// takes in a number (like royalFlush) and returns the formatted percent chance
+	// basically divides by the randomAttempts, multiplies by 100, and rounds it to the nearest tenth
+	// also, if the final number is 0 but the counter isn't 0
+	// (so it's like between 0 and .1) return "<.1" or something?
+}
+
+// Takes in 7-card combo and returns best hand value
 function bestHand(combo) {
 	var max = 0;
 	for (var a = 0; a <= 2; a++) {
@@ -134,37 +150,49 @@ function handValue(hand) {
 	}
 	calc.sort(function(a, b){return a-b});
 	if (sameSuit(hand) && isStraight(modded)) {
+		// Straight flush
 		if (calc[0] == 2) {
 			return calc[3] * 90000;
 		} else {
 			return calc[4] * 90000;
 		}
 	} else if (modded[1] == modded[2] && modded[1] == modded[3] && (modded[1] == modded[0] || modded[1] == modded[4])) {
+		// Four of a kind
 		return calc[1] * 30000;
 	} else if (modded[0] == modded[1] && modded[3] == modded[4] && (modded[2] == modded[0] || modded[2] == modded[4])) {
-		return 10 * (calc[4] * 169 + calc[0] * 13);
+		// Full house
+		return 10 * (calc[2] * 169 + calc[0] * 13);
 	} else if (sameSuit(hand)) {
-		return calc[4] * 250;
+		// Flush
+		return calc[4] * 250 + (calc[3] + calc[2] + calc[1] + calc[0]) * .01;
 	} else if (isStraight(modded)) {
+		// Straight
 		if (calc[0] == 2) {
 			return calc[3] * 30;
 		} else {
 			return calc[4] * 30;
 		}
 	} else if ((modded[2] == modded[0] && modded[2] == modded[1]) || (modded[2] == modded[1] && modded[2] == modded[3]) || (modded[2] == modded[3] && modded[2] == modded[4]) ) {
-		return calc[2] * 4;
+		// Three of a kind
+		return calc[2] * 4 + (calc[0] + calc[1] + calc[3] + calc[4]) * .001;
 	} else if ((modded[1] == modded[0] || modded[1] == modded[2]) && (modded[3] == modded[2] || modded[3] == modded[4])) {
+		// Two Pair
 		return (1/350) * (calc[3]*169+calc[1] * 13 + (.01) * (calc[0] + calc[1] + calc[2] + calc[3] + calc[4]));
 	} else if (modded[0] == modded[1]) {
-		return (1/60) * (calc[0] * 4 + calc[4] * 0.1);
+		// Pair
+		return (1/60) * (calc[0] * 4 + (calc[4] + calc[3] + calc[2]) * 0.01);
 	} else if (modded[1] == modded[2]) {
-		return (1/60) * (calc[1] * 4 + calc[4] * 0.1);
+		// Pair
+		return (1/60) * (calc[1] * 4 + (calc[4] + calc[3] + calc[0]) * 0.01);
 	} else if (modded[2] == modded[3]) {
-		return (1/60) * (calc[2] * 4 + calc[4] * 0.1);
+		// Pair
+		return (1/60) * (calc[2] * 4 + (calc[4] + calc[1] + calc[0]) * 0.01);
 	} else if (modded[3] == modded[4]) {
-		return (1/60) * (calc[3] * 4 + calc[2] * 0.1);
+		// Pair
+		return (1/60) * (calc[3] * 4 + (calc[2] + calc[1] + calc[0]) * 0.01);
 	} else {
-		return (.01) * calc[4];
+		// High card
+		return (.001) * (calc[4] + calc[3] + calc[2] + calc[1] + calc[0]);
 	}
 }
 
@@ -187,5 +215,35 @@ function sameSuit(hand) {
 }
 
 function isStraight(hand) {
-	return ((hand[4] - hand[0] == 4) || (hand[4] - hand[0] == 12 && hand[4] - hand[1] == 3) || (hand[4] - hand[0] == 12 && hand[4] - hand[1] == 11 && hand[4] - hand[2] == 2) );
+	if ((hand[4] - hand[0] == 4) && (hand[4] - hand[1] == 3) && (hand[4] - hand[2] == 2) && (hand[4] - hand[3] == 1)) {
+		return true;
+	} else if ((hand[4] - hand[0] == 12) && (hand[4] - hand[1] == 3) && (hand[4] - hand[2] == 2) && (hand[4] - hand[3] == 1)) {
+		// King high
+		return true;
+	} else if ((hand[4] - hand[0] == 12) && (hand[4] - hand[1] == 11) && (hand[4] - hand[2] == 2) && (hand[4] - hand[3] == 1)) {
+		// Royal straight
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function printHand(toPrint) {
+	var newPrint = [];
+	for (var i = 0; i < toPrint.length; i++) {
+		newPrint[i] = toPrint[i] % 13 + whatSuit(toPrint[i]);
+	}
+	console.log(newPrint);
+}
+
+function whatSuit(card) {
+	if (card <= 13) {
+		return "C";
+	} else if (card <= 26) {
+		return "D";
+	} else if (card <= 39) {
+		return "H";
+	} else if (card <= 52) {
+		return "S"
+	}
 }
