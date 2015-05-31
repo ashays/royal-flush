@@ -1,5 +1,8 @@
 var cards = [0, 0, 0, 0, 0, 0, 0];
-var randomAttempts = 10;
+var opponents = 2;
+var randomAttempts = 10000;
+
+// Counters
 var straightFlush = 0;
 var fourOfKind = 0;
 var flush = 0;
@@ -11,24 +14,57 @@ var fullHouse = 0;
 var straight = 0;
 var threeOfKind = 0;
 
-//recursive
-var factorial = function(n) {
-    if(n == 0) {
-        return 1
-    } else {
-        return n * factorial(n - 1);
-    }
-}
+var youWin = 0;
+var oppWin = 0;
+var noWin = 0;
 
 function makeCombos() {
 	for (var i = 0; i < randomAttempts; i++) {
-		updateCounter(bestHand(randomCombo()));
+		updateCounter(winnerCalc(randomCombo()));
 	}
 	updateProbs();
 }
 
+function randomCombo() {
+	cardCombo = cards.slice(0);
+	for (var i = 0; i < cardCombo.length; i++) {
+		if (cardCombo[i] == 0) {
+			var randCard = Math.floor((Math.random() * 52) + 1);
+			while (cardCombo.indexOf(randCard) != -1) {
+				randCard = Math.floor((Math.random() * 52) + 1);
+			}
+			cardCombo[i] = randCard;			
+		}
+	}
+	for (var j = 0; j < opponents * 2; j++) {
+		var randCard = Math.floor((Math.random() * 52) + 1);
+		while (cardCombo.indexOf(randCard) != -1) {
+			randCard = Math.floor((Math.random() * 52) + 1);
+		}
+		cardCombo[4 + j] = randCard;
+	}
+	return cardCombo;
+}
+
+function winnerCalc(everyone) {
+	var table = [everyone[0], everyone[1], everyone[2], everyone[3], everyone[4]];
+	var you = bestHand(table.concat([everyone[5], everyone[6]]));
+	var opp = 0;
+	for (var oppNum = 0; oppNum < opponents && you > opp; oppNum++) {
+		opp = bestHand(table.concat([everyone[7 + oppNum], everyone[8 + oppNum]]));
+	}
+	if (you > opp) {
+		youWin++;
+	} else if (opp > you) {
+		oppWin++;
+	} else {
+		noWin++;
+	}
+	return you;
+}
+
 function updateCounter(num) {
-	if (num == 1120000 ) {
+	if (num == 1260000 ) {
 		royalFlush++;
 	} else if (num >= 450000) {
 		straightFlush++;
@@ -61,27 +97,14 @@ function updateProbs() {
 	$("#three-of-a-kind").text((threeOfKind / randomAttempts) * 100);
 	$("#two-pair").text((twoPair / randomAttempts) * 100);
 	$("#pair").text((pair / randomAttempts) * 100);
-	$("#high-card").text((highCard / randomAttempts) * 100);
+	$("#high-card").text(Math.floor( 10 * (highCard / randomAttempts) * 100) / 10);
+	$("#you-win").text((youWin / randomAttempts) * 100);
+	$("#opp-win").text((oppWin / randomAttempts) * 100);
+	$("#no-win").text(Math.floor( 10 * (noWin / randomAttempts) * 100) / 10);
 }
-
-function randomCombo() {
-	cardCombo = cards.slice(0);
-	for (var i = 0; i < cardCombo.length; i++) {
-		if (cardCombo[i] == 0) {
-			var randCard = Math.floor((Math.random() * 52) + 1);
-			while (cardCombo.indexOf(randCard) != -1) {
-				randCard = Math.floor((Math.random() * 52) + 1);
-			}
-			cardCombo[i] = randCard;			
-		}
-	}
-	return cardCombo;
-}
-
 
 function bestHand(combo) {
 	var max = 0;
-	console.log(combo);
 	for (var a = 0; a <= 2; a++) {
 		for (var b = a+1; b <= 3; b++) {
 			for (var c = b+1; c <= 4; c++) {
@@ -103,7 +126,6 @@ function handValue(hand) {
 	hand.sort(function(a, b){return a-b});
 	var modded = [hand[0]%13, hand[1]%13, hand[2]%13, hand[3]%13, hand[4]%13];
 	modded.sort(function(a, b){return a-b});
-	debugger
 	var calc = modded.slice(0);
 	for (var i = 0; i <= 4; i++) {
 		if ((calc[i] == 0) || (calc[i] == 1)) {
@@ -111,50 +133,37 @@ function handValue(hand) {
 		}
 	}
 	calc.sort(function(a, b){return a-b});
-	// Straight flush
 	if (sameSuit(hand) && isStraight(modded)) {
-		console.log("straight flush");
 		if (calc[0] == 2) {
 			return calc[3] * 90000;
 		} else {
 			return calc[4] * 90000;
 		}
 	} else if (modded[1] == modded[2] && modded[1] == modded[3] && (modded[1] == modded[0] || modded[1] == modded[4])) {
-		console.log("four of a kind");
 		return calc[1] * 30000;
 	} else if (modded[0] == modded[1] && modded[3] == modded[4] && (modded[2] == modded[0] || modded[2] == modded[4])) {
-		console.log("full house");
 		return 10 * (calc[4] * 169 + calc[0] * 13);
 	} else if (sameSuit(hand)) {
-		console.log("flush");
 		return calc[4] * 250;
 	} else if (isStraight(modded)) {
-		console.log("straight");
 		if (calc[0] == 2) {
 			return calc[3] * 30;
 		} else {
 			return calc[4] * 30;
 		}
 	} else if ((modded[2] == modded[0] && modded[2] == modded[1]) || (modded[2] == modded[1] && modded[2] == modded[3]) || (modded[2] == modded[3] && modded[2] == modded[4]) ) {
-		console.log("three of a kind");
 		return calc[2] * 4;
 	} else if ((modded[1] == modded[0] || modded[1] == modded[2]) && (modded[3] == modded[2] || modded[3] == modded[4])) {
-		console.log("two pair");
 		return (1/350) * (calc[3]*169+calc[1] * 13 + (.01) * (calc[0] + calc[1] + calc[2] + calc[3] + calc[4]));
 	} else if (modded[0] == modded[1]) {
-		console.log("pair");
 		return (1/60) * (calc[0] * 4 + calc[4] * 0.1);
 	} else if (modded[1] == modded[2]) {
-		console.log("pair");
 		return (1/60) * (calc[1] * 4 + calc[4] * 0.1);
 	} else if (modded[2] == modded[3]) {
-		console.log("pair");
 		return (1/60) * (calc[2] * 4 + calc[4] * 0.1);
 	} else if (modded[3] == modded[4]) {
-		console.log("pair");
 		return (1/60) * (calc[3] * 4 + calc[2] * 0.1);
 	} else {
-		console.log("high card " + hand[4]);
 		return (.01) * calc[4];
 	}
 }
