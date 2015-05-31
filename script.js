@@ -94,22 +94,30 @@ function updateCounter(num) {
 
 // Prints probabilities to status page
 function updateProbs() {
-	$("#royal-flush").text((royalFlush / randomAttempts) * 100);
-	$("#straight-flush").text((straightFlush / randomAttempts) * 100);
-	$("#four-of-a-kind").text((fourOfKind / randomAttempts) * 100);
-	$("#full-house").text((fullHouse / randomAttempts) * 100);
-	$("#flush").text((flush / randomAttempts) * 100);
+	$("#royal-flush").text(formatNumber(royalFlush));
+	$("#straight-flush").text(formatNumber(straightFlush));
+	$("#four-of-a-kind").text(formatNumber(fourOfKind));
+	$("#full-house").text(formatNumber(fullHouse);
+	$("#flush").text(formatNumber(flush));
 	$("#straight").text((straight / randomAttempts) * 100);
-	$("#three-of-a-kind").text((threeOfKind / randomAttempts) * 100);
-	$("#two-pair").text((twoPair / randomAttempts) * 100);
-	$("#pair").text((pair / randomAttempts) * 100);
-	$("#high-card").text(Math.floor( 10 * (highCard / randomAttempts) * 100) / 10);
-	$("#you-win").text((youWin / randomAttempts) * 100);
-	$("#opp-win").text((oppWin / randomAttempts) * 100);
-	$("#no-win").text(Math.floor( 10 * (noWin / randomAttempts) * 100) / 10);
+	$("#three-of-a-kind").text(formatNumber(threeOfKind));
+	$("#two-pair").text(formatNumber(twoPair));
+	$("#pair").text(formatNumber(pair));
+	$("#high-card").text(formatNumber(highCard));
+	$("#you-win").text(formatNumber(youWin));
+	$("#opp-win").text(formatNumber(oppWin));
+	$("#no-win").text(formatNumber(noWin));
 }
 
 function formatNumber(counter) {
+	var prob;
+	prob = (counter / randomAttempts) * 100);
+	if (prob > 0 && prob < 0.1) {
+		prob = "<0.1";
+		return prob;
+	}
+	prob = Math.floor( 10 * (counter / randomAttempts) * 100) / 10);
+	return prob;
 	// takes in a number (like royalFlush) and returns the formatted percent chance
 	// basically divides by the randomAttempts, multiplies by 100, and rounds it to the nearest tenth
 	// also, if the final number is 0 but the counter isn't 0
