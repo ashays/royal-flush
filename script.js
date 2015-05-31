@@ -1,6 +1,6 @@
 var cards = [0, 0, 0, 0, 0, 0, 0];
 var opponents = 2;
-var randomAttempts = 1000;
+var randomAttempts = 10000;
 
 // Counters
 var straightFlush = 0;
@@ -50,21 +50,19 @@ function winnerCalc(everyone) {
 	var table = [everyone[0], everyone[1], everyone[2], everyone[3], everyone[4]];
 	var you = bestHand(table.concat([everyone[5], everyone[6]]));
 	var opp = 0;
-	for (var oppNum = 0; oppNum < opponents && you > opp; oppNum++) {
+	var isTie = false;
+	for (var oppNum = 0; oppNum < opponents * 2 && !(opp > you); oppNum+=2) {
 		opp = bestHand(table.concat([everyone[7 + oppNum], everyone[8 + oppNum]]));
+		if (opp == you) {
+			isTie = true;
+		}
 	}
-	if (you > opp) {
-		youWin++;
-	} else if (opp > you) {
+	if (opp > you) {
 		oppWin++;
-	} else {
-		// console.log("your cards: ");
-		// printHand(table.concat([everyone[5], everyone[6]]));
-		// console.log("opp cards: ");
-		// printHand(table.concat([everyone[7 + oppNum], everyone[8 + oppNum]]));
-		// console.log("You " + you + " Opp " + opp);
-		// console.log(" ");
+	} else if (isTie) {
 		noWin++;
+	} else if (you > opp) {
+		youWin++;
 	}
 	return you;
 }
@@ -178,16 +176,16 @@ function handValue(hand) {
 	} else if ((modded[1] == modded[0] || modded[1] == modded[2]) && (modded[3] == modded[2] || modded[3] == modded[4])) {
 		// Two Pair
 		return (1/350) * (calc[3]*169+calc[1] * 13 + (.01) * (calc[0] + calc[1] + calc[2] + calc[3] + calc[4]));
-	} else if (modded[0] == modded[1]) {
+	} else if (calc[0] == calc[1]) {
 		// Pair
 		return (1/60) * (calc[0] * 4 + (calc[4] + calc[3] + calc[2]) * 0.01);
-	} else if (modded[1] == modded[2]) {
+	} else if (calc[1] == calc[2]) {
 		// Pair
 		return (1/60) * (calc[1] * 4 + (calc[4] + calc[3] + calc[0]) * 0.01);
-	} else if (modded[2] == modded[3]) {
+	} else if (calc[2] == calc[3]) {
 		// Pair
 		return (1/60) * (calc[2] * 4 + (calc[4] + calc[1] + calc[0]) * 0.01);
-	} else if (modded[3] == modded[4]) {
+	} else if (calc[3] == calc[4]) {
 		// Pair
 		return (1/60) * (calc[3] * 4 + (calc[2] + calc[1] + calc[0]) * 0.01);
 	} else {
@@ -217,10 +215,10 @@ function sameSuit(hand) {
 function isStraight(hand) {
 	if ((hand[4] - hand[0] == 4) && (hand[4] - hand[1] == 3) && (hand[4] - hand[2] == 2) && (hand[4] - hand[3] == 1)) {
 		return true;
-	} else if ((hand[4] - hand[0] == 12) && (hand[4] - hand[1] == 3) && (hand[4] - hand[2] == 2) && (hand[4] - hand[3] == 1)) {
+	} else if (hand == [0, 9, 10, 11, 12]) {
 		// King high
 		return true;
-	} else if ((hand[4] - hand[0] == 12) && (hand[4] - hand[1] == 11) && (hand[4] - hand[2] == 2) && (hand[4] - hand[3] == 1)) {
+	} else if (hand == [0, 1, 10, 11, 12]) {
 		// Royal straight
 		return true;
 	} else {
