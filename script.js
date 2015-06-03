@@ -110,7 +110,7 @@ function updateProbs() {
 	$("#royal-flush").text(formatNumber(royalFlush));
 	$("#straight-flush").text(formatNumber(straightFlush));
 	$("#four-of-a-kind").text(formatNumber(fourOfKind));
-	$("#full-house").text(formatNumber(fullHouse);
+	$("#full-house").text(formatNumber(fullHouse));
 	$("#flush").text(formatNumber(flush));
 	$("#straight").text((straight / randomAttempts) * 100);
 	$("#three-of-a-kind").text(formatNumber(threeOfKind));
@@ -124,12 +124,12 @@ function updateProbs() {
 
 function formatNumber(counter) {
 	var prob;
-	prob = (counter / randomAttempts) * 100);
+	prob = (counter / randomAttempts) * 100;
 	if (prob > 0 && prob < 0.1) {
 		prob = "<0.1";
 		return prob;
 	}
-	prob = Math.floor( 10 * (counter / randomAttempts) * 100) / 10);
+	prob = Math.floor( 10 * (counter / randomAttempts) * 100) / 10;
 	return prob;
 	// takes in a number (like royalFlush) and returns the formatted percent chance
 	// basically divides by the randomAttempts, multiplies by 100, and rounds it to the nearest tenth
