@@ -14,23 +14,19 @@ $(document).ready(function (){
 	tableCards.itemslide();
 	createSelector();
 	refresh();
-	$('#selector').hide();
+	$('#selector').fadeOut();
 
 	$(".selector .card").click(function() {
 		cards[selectedCard] = selector.getActiveIndex();
 		refresh();
+		$('#selector').fadeOut();
 		makeCombos();
-		$('#selector').hide();
 		$('.info').css('height', 215);
-		// $('#handPercents').show();
-		// $('#winPercents').show();
 	});
 
 	$("#cancel-select-btn").click(function() {
-		$('#selector').hide();
+		$('#selector').fadeOut();
 		$('.info').css('height', 215);
-		// $('#handPercents').show();
-		// $('#winPercents').show();
 	});
 
 	$(".selectableCard .card").click(function(event) {
@@ -42,9 +38,7 @@ $(document).ready(function (){
 		}
 		console.log(selectedCard);
 		$('.info').css('height', 0);
-		// $('#handPercents').hide();
-		// $('#winPercents').hide();
-		$("#selector").show(); 
+		$("#selector").fadeIn(); 
 	});
 
 	tableCards.on('changePos', function(e) {
@@ -52,9 +46,7 @@ $(document).ready(function (){
 			selectedCard = tableCards.getActiveIndex();
 			console.log("moved slider " + selectedCard);
 			$('.info').css('height', 0);
-			// $('#handPercents').hide();
-			// $('#winPercents').hide();
-			$("#selector").show(); 			
+			$("#selector").fadeIn(); 			
 		}
 	});
 });
@@ -88,7 +80,9 @@ function createSelector() {
 		}
 	}
 	selector = $(".selector ul");
-	selector.itemslide();
+	selector.itemslide({
+		swipe_sensitivity: 400
+	});
 }
 
 function getSuit(card) {
