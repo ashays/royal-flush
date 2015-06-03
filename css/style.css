@@ -1,0 +1,161 @@
+@charset "utf-8";
+/* CSS Document */
+
+*, *:before, *:after {
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+body {
+    font-family: 'caviar_dreamsregular';
+    margin: 0;
+}
+
+@font-face {
+    font-family: 'caviar_dreamsregular';
+    src: url('CaviarDreams-webfont.eot');
+    src: url('CaviarDreams-webfont.eot?#iefix') format('embedded-opentype'),
+         url('CaviarDreams-webfont.woff') format('woff'),
+         url('CaviarDreams-webfont.ttf') format('truetype'),
+         url('CaviarDreams-webfont.svg#caviar_dreamsregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.background {
+    position: absolute;
+}
+
+.card {
+    display: inline-block;
+    height: 252px;
+    width: 180px;
+    background-color: rgba(255,255,255,.25);
+    overflow: hidden;
+    margin: 5px;
+    text-align: center;
+    border-radius: 7px;
+    cursor: pointer;
+    box-shadow: 0px 0px 15px rgba(0,0,0,.15);
+}
+
+.card.red {
+    background-color: rgba(238,51,34,.75);
+}
+
+.card.black {
+    background-color: rgba(38,38,38,.75);
+}
+
+.card.black::after, .card.red::after {
+    display: block;
+    content: '';
+    background: url('../img/matte.png');
+    opacity: .25;
+    margin-top: -252px;
+    width: 100%;
+    height: 100%;
+}
+
+.card .logo {
+    display: block;
+    height: 140px;
+    width: 140px;
+    margin: 56px auto;
+    text-transform: uppercase;
+    font-size: 30px;
+    text-align: center;
+    background-image: url('../img/star.png');
+    background-size: contain;
+    padding: 34px 0;
+    color: #555;
+    letter-spacing: 3px;
+}
+
+.card .logo::first-line {
+    font-weight: bolder;
+    letter-spacing: normal;
+}
+
+.card img.suit {
+    height: 55px;
+}
+
+.card span.cardValue {
+    display: block;
+    font-size: 100px;
+    color: #FFF;
+    line-height: 142px;
+    margin: 55px 0;
+}
+
+.card img.suit:first-child {
+    float: left;
+}
+
+.card img.suit:last-child {
+    float: right;
+    margin-top: -55px;
+    -moz-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+    filter: FlipV;
+    -ms-filter: "FlipV";
+}
+
+.table {
+    text-align: center;
+    height: 296px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.table .wrapper {
+    height: 296px;    
+    width: 100%;    
+    overflow: hidden;
+    position: absolute;
+}
+
+.table ul {
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    width: 1000px !important;
+}
+
+.table ul li {
+    display: inline-block;
+    float: left;
+}
+
+.hand {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: -20px;
+}
+
+.hand .card {
+    -ms-transform: scale(.6,.6); /* IE 9 */      
+    -webkit-transform: scale(.6,.6); /* Safari */      
+    transform: scale(.6,.6);
+    margin: -30px;
+}
+
+.info {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: none;
+}
+
+.block {
+    background-color: rgba(255,255,255,.75);
+    width: 90%;
+    max-width: 350px;
+    padding: 10px;
+    margin: 0 auto 10px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,.15);
+}
+
