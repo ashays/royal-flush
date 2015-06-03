@@ -1,3 +1,16 @@
+var tableCards;
+
+$(document).ready(function (){
+	var pattern = Trianglify({
+	  height: $('body').height(),
+	  width: $('body').width(),
+	  //x_colors: "Spectral",
+	  cell_size: 40});
+	$(".background").append(pattern.canvas());
+	tableCards = $(".table ul");
+	tableCards.itemslide();
+});
+
 var cards = [0, 0, 0, 0, 0, 0, 0];
 var opponents = 2;
 var randomAttempts = 10000;
@@ -111,12 +124,12 @@ function updateProbs() {
 
 function formatNumber(counter) {
 	var prob;
-	prob = ((counter / randomAttempts) * 100);
+	prob = (counter / randomAttempts) * 100;
 	if (prob > 0 && prob < 0.1) {
 		prob = "<0.1";
 		return prob;
 	}
-	prob = Math.floor(( 10 * (counter / randomAttempts) * 100) / 10);
+	prob = Math.floor( 10 * (counter / randomAttempts) * 100) / 10;
 	return prob;
 	// takes in a number (like royalFlush) and returns the formatted percent chance
 	// basically divides by the randomAttempts, multiplies by 100, and rounds it to the nearest tenth
@@ -149,6 +162,7 @@ function handValue(hand) {
 	var modded = [hand[0]%13, hand[1]%13, hand[2]%13, hand[3]%13, hand[4]%13];
 	modded.sort(function(a, b){return a-b});
 	var calc = modded.slice(0);
+	var kicker = (calc[4] * (38416) + calc[3] * (2744) + calc[2] * (196) + calc[1] * (14) + calc[0]) / (9600.2);
 	for (var i = 0; i <= 4; i++) {
 		if ((calc[i] == 0) || (calc[i] == 1)) {
 			calc[i] += 13;
@@ -170,7 +184,7 @@ function handValue(hand) {
 		return 10 * (calc[2] * 169 + calc[0] * 13);
 	} else if (sameSuit(hand)) {
 		// Flush
-		return calc[4] * 250 + (calc[3] + calc[2] + calc[1] + calc[0]) * .01;
+		return calc[4] * 250 + kicker * .01;
 	} else if (isStraight(modded)) {
 		// Straight
 		if (calc[0] == 2) {
@@ -180,25 +194,25 @@ function handValue(hand) {
 		}
 	} else if ((modded[2] == modded[0] && modded[2] == modded[1]) || (modded[2] == modded[1] && modded[2] == modded[3]) || (modded[2] == modded[3] && modded[2] == modded[4]) ) {
 		// Three of a kind
-		return calc[2] * 4 + (calc[0] + calc[1] + calc[3] + calc[4]) * .001;
+		return calc[2] * 4 + kicker * .001;
 	} else if ((modded[1] == modded[0] || modded[1] == modded[2]) && (modded[3] == modded[2] || modded[3] == modded[4])) {
 		// Two Pair
-		return (1/350) * (calc[3]*169+calc[1] * 13 + (.01) * (calc[0] + calc[1] + calc[2] + calc[3] + calc[4]));
+		return (1/350) * (calc[3]*169+calc[1] * 13 + (.01) * kicker);
 	} else if (calc[0] == calc[1]) {
 		// Pair
-		return (1/60) * (calc[0] * 4 + (calc[4] + calc[3] + calc[2]) * 0.01);
+		return (1/60) * (calc[0] * 4 + kicker * 0.01);
 	} else if (calc[1] == calc[2]) {
 		// Pair
-		return (1/60) * (calc[1] * 4 + (calc[4] + calc[3] + calc[0]) * 0.01);
+		return (1/60) * (calc[1] * 4 + kicker * 0.01);
 	} else if (calc[2] == calc[3]) {
 		// Pair
-		return (1/60) * (calc[2] * 4 + (calc[4] + calc[1] + calc[0]) * 0.01);
+		return (1/60) * (calc[2] * 4 + kicker * 0.01);
 	} else if (calc[3] == calc[4]) {
 		// Pair
-		return (1/60) * (calc[3] * 4 + (calc[2] + calc[1] + calc[0]) * 0.01);
+		return (1/60) * (calc[3] * 4 + kicker * 0.01);
 	} else {
 		// High card
-		return (.001) * (calc[4] + calc[3] + calc[2] + calc[1] + calc[0]);
+		return (.001) * (calc[4] + kicker);
 	}
 }
 
@@ -253,4 +267,3 @@ function whatSuit(card) {
 		return "S"
 	}
 }
-
