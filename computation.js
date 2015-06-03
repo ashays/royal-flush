@@ -32,6 +32,20 @@ var oppWin = 0;
 var noWin = 0;
 
 function makeCombos() {
+	straightFlush = 0;
+	fourOfKind = 0;
+	flush = 0;
+	twoPair = 0;
+	royalFlush = 0;
+	pair = 0;
+	highCard = 0;
+	fullHouse = 0;
+	straight = 0;
+	threeOfKind = 0;
+
+	youWin = 0;
+	oppWin = 0;
+	noWin = 0;
 	for (var i = 0; i < randomAttempts; i++) {
 		updateCounter(winnerCalc(randomCombo()));
 	}
