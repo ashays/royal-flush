@@ -2,6 +2,42 @@
 var selector;
 var selectedCard; 
 
+
+$(document).ready(function (){
+	var pattern = Trianglify({
+	  height: $('body').height(),
+	  width: $('body').width(),
+	  //x_colors: "Spectral",
+	  cell_size: 40});
+	$(".background").append(pattern.canvas());
+	tableCards = $(".table ul");
+	tableCards.itemslide();
+	//createSelector();
+
+$("#select-card-btn").click(function() {
+	cards[selectedCard] = selector.getActiveIndex();
+	refresh();
+	makeCombos();
+});
+
+$(".selectableCard .card").click(function(event) {
+	console.log("clicked a card");
+	if ($(event.target).hasClass('card')) {
+		selectedCard = $(event.target).attr('data-index');
+	} else {
+		selectedCard = $(event.target).parents('.card').attr('data-index');
+	}
+	console.log(selectedCard);
+});
+
+tableCards.on('changePos', function(e) {
+	selectedCard = tableCards.getActiveIndex();
+	console.log("moved slider " + selectedCard);
+});
+
+});
+
+
 function refresh() {
 	for (var i = 0; i < 7; i++) {
 		num = cards[i];
@@ -64,11 +100,3 @@ function getRank(card) {
 		}
 	}
 }
-
-$("#select-card-btn").click(function() {
-	cards[selectedCard] = selector.getActiveIndex();
-});
-
-$(".table .card").click(function(event) {
-	selectedCard = $(event.target).attr("data-index");
-});
