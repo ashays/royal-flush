@@ -33,6 +33,7 @@ $(".selectableCard .card").click(function(event) {
 tableCards.on('changePos', function(e) {
 	selectedCard = tableCards.getActiveIndex();
 	console.log("moved slider " + selectedCard);
+	$(".selector").show(); 
 });
 
 });
