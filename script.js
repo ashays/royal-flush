@@ -1,3 +1,5 @@
+var selector;
+
 function refresh() {
 	for (var i = 0; i < 7; i++) {
 		num = cards[i];
@@ -17,10 +19,16 @@ function refresh() {
 
 function createSelector() {
 	$(".selector ul").append('<li><div class="card"><div class="logo">Royal Flush</div></div></li>');
-	for (var i = 0; i < 52; i++) {
-		$(".selector ul").append('<li><div class="card black"><img class="suit" src="img/suits/' + getSuit(i) + '.png"><span class="cardValue">' + getRank(i) + '</span><img class="suit" src="img/suits/' + getSuit(i) + '.png"></div></li>');
+	for (var i = 1; i <= 52; i++) {
+		if (i <= 26) {
+			$(".selector ul").append('<li><div class="card black"><img class="suit" src="img/suits/' + getSuit(i) + '.png"><span class="cardValue">' + getRank(i) + '</span><img class="suit" src="img/suits/' + getSuit(i) + '.png"></div></li>');
+		}
+		else {
+			$(".selector ul").append('<li><div class="card red"><img class="suit" src="img/suits/' + getSuit(i) + '.png"><span class="cardValue">' + getRank(i) + '</span><img class="suit" src="img/suits/' + getSuit(i) + '.png"></div></li>');
+		}
 	}
-	$(".selector ul").itemslide();
+	selector = $(".selector ul");
+	selector.itemslide();
 }
 
 function getSuit(card) {
