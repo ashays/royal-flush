@@ -18,6 +18,9 @@ $("#select-card-btn").click(function() {
 	cards[selectedCard] = selector.getActiveIndex();
 	refresh();
 	makeCombos();
+	$('.selector').hide();
+	$('#handPercents').show();
+	$('#winPercents').show();
 });
 
 $(".selectableCard .card").click(function(event) {
@@ -59,7 +62,7 @@ function refresh() {
 function createSelector() {
 	$(".selector ul").append('<li><div class="card"><div class="logo">Royal Flush</div></div></li>');
 	for (var i = 1; i <= 52; i++) {
-		if (i <= 26) {
+		if (i <= 13 || (i > 26 && i <= 39)) {
 			$(".selector ul").append('<li><div class="card black"><img class="suit" src="img/suits/' + getSuit(i) + '.png"><span class="cardValue">' + getRank(i) + '</span><img class="suit" src="img/suits/' + getSuit(i) + '.png"></div></li>');
 		}
 		else {
@@ -74,11 +77,11 @@ function getSuit(card) {
 	if (card <= 13) {
 		return "club";
 	} else if (card <= 26) {
-		return "spade";
+		return "diamond";
 	} else if (card <= 39) {
-		return "heart";
+		return "spade";
 	} else if (card <= 52) {
-		return "diamond"
+		return "heart";
 	}
 }
 
