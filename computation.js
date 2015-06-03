@@ -112,7 +112,7 @@ function updateProbs() {
 	$("#four-of-a-kind").text(formatNumber(fourOfKind));
 	$("#full-house").text(formatNumber(fullHouse));
 	$("#flush").text(formatNumber(flush));
-	$("#straight").text((straight / randomAttempts) * 100);
+	$("#straight").text(formatNumber(straight));
 	$("#three-of-a-kind").text(formatNumber(threeOfKind));
 	$("#two-pair").text(formatNumber(twoPair));
 	$("#pair").text(formatNumber(pair));
@@ -126,7 +126,7 @@ function formatNumber(counter) {
 	var prob;
 	prob = (counter / randomAttempts) * 100;
 	if (prob > 0 && prob < 0.1) {
-		prob = "<0.1";
+		prob = "< 0.1";
 		return prob;
 	}
 	prob = Math.floor( 10 * (counter / randomAttempts) * 100) / 10;
