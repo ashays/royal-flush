@@ -1,19 +1,3 @@
-var tableCards;
-
-$(document).ready(function (){
-	var pattern = Trianglify({
-	  height: $('body').height(),
-	  width: $('body').width(),
-	  //x_colors: "Spectral",
-	  cell_size: 40});
-	$(".background").append(pattern.canvas());
-	tableCards = $(".table ul");
-	tableCards.itemslide();
-	//createSelector();
-});
-
-
-
 var cards = [0, 0, 0, 0, 0, 0, 0];
 var opponents = 2;
 var randomAttempts = 10000;
