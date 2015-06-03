@@ -7,28 +7,30 @@ $(document).ready(function (){
 	var pattern = Trianglify({
 	  height: $('body').height(),
 	  width: $('body').width(),
-	  //x_colors: "Spectral",
+	  x_colors: "Spectral",
 	  cell_size: 40});
 	$(".background").append(pattern.canvas());
 	tableCards = $(".table ul");
 	tableCards.itemslide();
 	createSelector();
 	refresh();
-	$('.selector').hide();	
+	$('#selector').hide();
 
-	$("#select-card-btn").click(function() {
+	$(".selector .card").click(function() {
 		cards[selectedCard] = selector.getActiveIndex();
 		refresh();
 		makeCombos();
-		$('.selector').hide();
-		$('#handPercents').show();
-		$('#winPercents').show();
+		$('#selector').hide();
+		$('.info').css('height', 215);
+		// $('#handPercents').show();
+		// $('#winPercents').show();
 	});
 
 	$("#cancel-select-btn").click(function() {
-		$('.selector').hide();
-		$('#handPercents').show();
-		$('#winPercents').show();
+		$('#selector').hide();
+		$('.info').css('height', 215);
+		// $('#handPercents').show();
+		// $('#winPercents').show();
 	});
 
 	$(".selectableCard .card").click(function(event) {
@@ -39,18 +41,20 @@ $(document).ready(function (){
 			selectedCard = $(event.target).parents('.card').attr('data-index');
 		}
 		console.log(selectedCard);
-		$('#handPercents').hide();
-		$('#winPercents').hide();
-		$(".selector").show(); 
+		$('.info').css('height', 0);
+		// $('#handPercents').hide();
+		// $('#winPercents').hide();
+		$("#selector").show(); 
 	});
 
 	tableCards.on('changePos', function(e) {
 		if (selectedCard != tableCards.getActiveIndex()) {
 			selectedCard = tableCards.getActiveIndex();
 			console.log("moved slider " + selectedCard);
-			$('#handPercents').hide();
-			$('#winPercents').hide();
-			$(".selector").show(); 			
+			$('.info').css('height', 0);
+			// $('#handPercents').hide();
+			// $('#winPercents').hide();
+			$("#selector").show(); 			
 		}
 	});
 });
