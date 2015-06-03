@@ -2,29 +2,61 @@
 
 <head>
 	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
 	<script src="jquery.min.js"></script>
+	<script src="itemslide.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.2.1/trianglify.min.js"></script>
 	<script src="script.js"></script>
 	<title>Royal Flush</title>
 </head>
 
 <body>
-	<div class="status">
-		<div>Royal Flush: <span id="royal-flush"></span></div>
-		<div>Straight Flush: <span id="straight-flush"></span></div>
-		<div>Four of a Kind: <span id="four-of-a-kind"></span></div>
-		<div>Full House: <span id="full-house"></span></div>
-		<div>Flush: <span id="flush"></span></div>
-		<div>Straight: <span id="straight"></span></div>
-		<div>Three of a Kind: <span id="three-of-a-kind"></span></div>
-		<div>Two Pair: <span id="two-pair"></span></div>
-		<div>Pair: <span id="pair"></span></div>
-		<div>High Card: <span id="high-card"></span></div>
-		<br>
-		<div>You Win: <span id="you-win"></span></div>
-		<div>Opponent Wins: <span id="opp-win"></span></div>
-		<div>Split Pot: <span id="no-win"></span></div>
+
+	<div class="background"></div>
+	<div class="table">
+		<div class="wrapper">
+			<ul>
+				<li><div class="card black"><img class="suit" src="img/suits/spade.png"><span class="cardValue">K</span><img class="suit" src="img/suits/spade.png"></div></li>
+				<li><div class="card"><div class="logo">Royal Flush</div></div></li>
+				<li><div class="card"><div class="logo">Royal Flush</div></div></li>
+				<li><div class="card"><div class="logo">Royal Flush</div></div></li>
+				<li><div class="card"><div class="logo">Royal Flush</div></div></li>
+			</ul>
+		</div>
 	</div>
+	<div class="hand">
+		<div class="card black">
+			<img class="suit" src="img/suits/club.png"><span class="cardValue">10</span><img class="suit" src="img/suits/club.png">
+		</div>
+		<div class="card red">
+			<img class="suit" src="img/suits/heart.png"><span class="cardValue">8</span><img class="suit" src="img/suits/heart.png">
+		</div>
+	</div>
+
+	<div class="info">
+		<div class="block">
+			<div>You Win: <span id="you-win"></span></div>
+			<div>Opponent Wins: <span id="opp-win"></span></div>
+			<div>Split Pot: <span id="no-win"></span></div>
+		</div>
+
+		<div class="block">
+			<div class="status">
+				<div>Royal Flush: <span id="royal-flush"></span></div>
+				<div>Straight Flush: <span id="straight-flush"></span></div>
+				<div>Four of a Kind: <span id="four-of-a-kind"></span></div>
+				<div>Full House: <span id="full-house"></span></div>
+				<div>Flush: <span id="flush"></span></div>
+				<div>Straight: <span id="straight"></span></div>
+				<div>Three of a Kind: <span id="three-of-a-kind"></span></div>
+				<div>Two Pair: <span id="two-pair"></span></div>
+				<div>Pair: <span id="pair"></span></div>
+				<div>High Card: <span id="high-card"></span></div>
+			</div>		
+		</div>
+	</div>
+
 </body>
 
 </html>
