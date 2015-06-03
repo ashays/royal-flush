@@ -186,9 +186,17 @@ body {
 .selector {
     position: fixed;
     text-align: center;
-    height: 296px;
     width: 100%;
     overflow: hidden;
     background-color: rgba(255,255,255,.8);
     bottom: 0;
+}
+
+.button {
+    display: inline-block;
+    width: 150px;
+    background-color: rgba(255,255,255,.75);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
 }
