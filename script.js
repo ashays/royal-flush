@@ -1,6 +1,6 @@
 var tableCards;
 var selector;
-var selectedCard; 
+var selectedCard = 0;
 
 
 $(document).ready(function (){
@@ -14,11 +14,18 @@ $(document).ready(function (){
 	tableCards.itemslide();
 	createSelector();
 	refresh();
+	$('.selector').hide();	
 
 	$("#select-card-btn").click(function() {
 		cards[selectedCard] = selector.getActiveIndex();
 		refresh();
 		makeCombos();
+		$('.selector').hide();
+		$('#handPercents').show();
+		$('#winPercents').show();
+	});
+
+	$("#cancel-select-btn").click(function() {
 		$('.selector').hide();
 		$('#handPercents').show();
 		$('#winPercents').show();
@@ -38,11 +45,13 @@ $(document).ready(function (){
 	});
 
 	tableCards.on('changePos', function(e) {
-		selectedCard = tableCards.getActiveIndex();
-		console.log("moved slider " + selectedCard);
-		$('#handPercents').hide();
-		$('#winPercents').hide();
-		$(".selector").show(); 
+		if (selectedCard != tableCards.getActiveIndex()) {
+			selectedCard = tableCards.getActiveIndex();
+			console.log("moved slider " + selectedCard);
+			$('#handPercents').hide();
+			$('#winPercents').hide();
+			$(".selector").show(); 			
+		}
 	});
 });
 
