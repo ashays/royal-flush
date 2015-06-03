@@ -1,3 +1,5 @@
+var selectedCard; 
+
 function refresh() {
 	for (var i = 0; i < 7; i++) {
 		num = cards[i];
@@ -54,3 +56,11 @@ function getRank(card) {
 		}
 	}
 }
+
+$("#select-card-btn").click(function() {
+	cards[selectedCard] = selector.getActiveIndex();
+});
+
+$(".table .card").click(function(event) {
+	selectedCard = $(event.target).attr("data-index");
+});
