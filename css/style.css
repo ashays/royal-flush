@@ -111,17 +111,13 @@ body {
 }
 
 .table .wrapper, .selector .wrapper {
-    height: 296px;    
     width: 100%;    
     overflow: hidden;
-    position: absolute;
 }
 
 .table ul, .selector ul {
-    position: absolute;
     list-style: none;
     padding: 0;
-    width: 1000px !important;
 }
 
 .table ul li, .selector ul li {
@@ -190,7 +186,7 @@ body {
     overflow: hidden;
     background-color: rgba(255,255,255,.8);
     bottom: 0;
-    height: 300px;
+    height: 350px;
 }
 
 .button {
