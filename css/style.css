@@ -110,7 +110,7 @@ body {
     overflow: hidden;
 }
 
-.table .wrapper {
+.table .wrapper, .selector .wrapper {
     height: 296px;    
     width: 100%;    
     overflow: hidden;
@@ -190,6 +190,7 @@ body {
     overflow: hidden;
     background-color: rgba(255,255,255,.8);
     bottom: 0;
+    height: 300px;
 }
 
 .button {

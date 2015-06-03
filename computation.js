@@ -9,7 +9,10 @@ $(document).ready(function (){
 	$(".background").append(pattern.canvas());
 	tableCards = $(".table ul");
 	tableCards.itemslide();
+	//createSelector();
 });
+
+
 
 var cards = [0, 0, 0, 0, 0, 0, 0];
 var opponents = 2;

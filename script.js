@@ -15,11 +15,12 @@ function refresh() {
 	}
 }
 
-function selector() {
+function createSelector() {
 	$(".selector ul").append('<li><div class="card"><div class="logo">Royal Flush</div></div></li>');
 	for (var i = 0; i < 52; i++) {
-		$(".selector ul").append('<li><div class="card black"><img class="suit" src="img/suits/' + getSuit(cards[i]) + '.png"><span class="cardValue">' + getRank(cards[i]) + '</span><img class="suit" src="img/suits/' + getSuit(cards[i]) + '.png"></div></li>');
+		$(".selector ul").append('<li><div class="card black"><img class="suit" src="img/suits/' + getSuit(i) + '.png"><span class="cardValue">' + getRank(i) + '</span><img class="suit" src="img/suits/' + getSuit(i) + '.png"></div></li>');
 	}
+	$(".selector ul").itemslide();
 }
 
 function getSuit(card) {
