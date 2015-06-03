@@ -1,4 +1,4 @@
-
+var tableCards;
 var selector;
 var selectedCard; 
 
@@ -13,37 +13,37 @@ $(document).ready(function (){
 	tableCards = $(".table ul");
 	tableCards.itemslide();
 	createSelector();
-
-$("#select-card-btn").click(function() {
-	cards[selectedCard] = selector.getActiveIndex();
 	refresh();
-	makeCombos();
-	$('.selector').hide();
-	$('#handPercents').show();
-	$('#winPercents').show();
-});
 
-$(".selectableCard .card").click(function(event) {
-	console.log("clicked a card");
-	if ($(event.target).hasClass('card')) {
-		selectedCard = $(event.target).attr('data-index');
-	} else {
-		selectedCard = $(event.target).parents('.card').attr('data-index');
-	}
-	console.log(selectedCard);
-	$('#handPercents').hide();
-	$('#winPercents').hide();
-	$(".selector").show(); 
-});
+	$("#select-card-btn").click(function() {
+		cards[selectedCard] = selector.getActiveIndex();
+		refresh();
+		makeCombos();
+		$('.selector').hide();
+		$('#handPercents').show();
+		$('#winPercents').show();
+	});
 
-tableCards.on('changePos', function(e) {
-	selectedCard = tableCards.getActiveIndex();
-	console.log("moved slider " + selectedCard);
-	$('#handPercents').hide();
-	$('#winPercents').hide();
-	$(".selector").show(); 
-});
+	$(".selectableCard .card").click(function(event) {
+		console.log("clicked a card");
+		if ($(event.target).hasClass('card')) {
+			selectedCard = $(event.target).attr('data-index');
+		} else {
+			selectedCard = $(event.target).parents('.card').attr('data-index');
+		}
+		console.log(selectedCard);
+		$('#handPercents').hide();
+		$('#winPercents').hide();
+		$(".selector").show(); 
+	});
 
+	tableCards.on('changePos', function(e) {
+		selectedCard = tableCards.getActiveIndex();
+		console.log("moved slider " + selectedCard);
+		$('#handPercents').hide();
+		$('#winPercents').hide();
+		$(".selector").show(); 
+	});
 });
 
 
