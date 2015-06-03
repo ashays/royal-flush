@@ -31,11 +31,16 @@ $(".selectableCard .card").click(function(event) {
 		selectedCard = $(event.target).parents('.card').attr('data-index');
 	}
 	console.log(selectedCard);
+	$('#handPercents').hide();
+	$('#winPercents').hide();
+	$(".selector").show(); 
 });
 
 tableCards.on('changePos', function(e) {
 	selectedCard = tableCards.getActiveIndex();
 	console.log("moved slider " + selectedCard);
+	$('#handPercents').hide();
+	$('#winPercents').hide();
 	$(".selector").show(); 
 });
 
