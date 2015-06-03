@@ -48,7 +48,7 @@ function refresh() {
 		if (num == 0) {
 			$($(".card")[i]).removeClass('black red').html('<div class="logo">Royal Flush</div>');
 		}
-		else if (num <= 26) {
+		else if (i <= 13 || (i > 26 && i <= 39) {
 			$($(".card")[i]).addClass('black').removeClass('red');
 			$($(".card")[i]).html('<img class="suit" src="img/suits/' + getSuit(cards[i]) + '.png"><span class="cardValue">' + getRank(cards[i]) + '</span><img class="suit" src="img/suits/' + getSuit(cards[i]) + '.png">');
 
