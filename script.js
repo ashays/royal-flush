@@ -7,7 +7,7 @@ $(document).ready(function (){
 	var pattern = Trianglify({
 	  height: $('body').height(),
 	  width: $('body').width(),
-	  x_colors: "Spectral",
+	  x_colors: "BrBG",
 	  cell_size: 40});
 	$(".background").append(pattern.canvas());
 	tableCards = $(".table ul");
@@ -20,13 +20,15 @@ $(document).ready(function (){
 		cards[selectedCard] = selector.getActiveIndex();
 		refresh();
 		$('#selector').fadeOut();
-		makeCombos();
-		$('.info').css('height', 215);
+		window.setTimeout(function() {
+			makeCombos();
+			$('.info').css('height', 80);
+		}, 1000);
 	});
 
 	$("#cancel-select-btn").click(function() {
 		$('#selector').fadeOut();
-		$('.info').css('height', 215);
+		$('.info').css('height', 80);
 	});
 
 	$(".selectableCard .card").click(function(event) {
@@ -41,14 +43,14 @@ $(document).ready(function (){
 		$("#selector").fadeIn(); 
 	});
 
-	tableCards.on('changePos', function(e) {
-		if (selectedCard != tableCards.getActiveIndex()) {
-			selectedCard = tableCards.getActiveIndex();
-			console.log("moved slider " + selectedCard);
-			$('.info').css('height', 0);
-			$("#selector").fadeIn(); 			
-		}
-	});
+	// tableCards.on('changePos', function(e) {
+	// 	if (selectedCard != tableCards.getActiveIndex()) {
+	// 		selectedCard = tableCards.getActiveIndex();
+	// 		console.log("moved slider " + selectedCard);
+	// 		$('.info').css('height', 0);
+	// 		$("#selector").fadeIn(); 			
+	// 	}
+	// });
 });
 
 
