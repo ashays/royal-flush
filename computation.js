@@ -1,42 +1,34 @@
-var cards = [0, 0, 0, 0, 0, 0, 0];
-var opponents = 2;
 var randomAttempts = 10000;
 
-// Counters
-var straightFlush = 0;
-var fourOfKind = 0;
-var flush = 0;
-var twoPair = 0;
-var royalFlush = 0;
-var pair = 0;
-var highCard = 0;
-var fullHouse = 0;
-var straight = 0;
-var threeOfKind = 0;
+var opponents = 2;
 
+// Counters
 var youWin = 0;
 var oppWin = 0;
 var noWin = 0;
+var royalFlush = 0;
+var straightFlush = 0;
+var fourOfKind = 0;
+var fullHouse = 0;
+var flush = 0;
+var straight = 0;
+var threeOfKind = 0;
+var twoPair = 0;
+var pair = 0;
+var highCard = 0;
+
+onmessage = function(event) {
+	cards = event.data;
+	console.log(cards);
+	makeCombos();
+	var counters = [youWin, oppWin, noWin, royalFlush, straightFlush, fourOfKind, fullHouse, flush, straight, threeOfKind, twoPair, pair, highCard];
+	postMessage(counters);
+}
 
 function makeCombos() {
-	straightFlush = 0;
-	fourOfKind = 0;
-	flush = 0;
-	twoPair = 0;
-	royalFlush = 0;
-	pair = 0;
-	highCard = 0;
-	fullHouse = 0;
-	straight = 0;
-	threeOfKind = 0;
-
-	youWin = 0;
-	oppWin = 0;
-	noWin = 0;
 	for (var i = 0; i < randomAttempts; i++) {
 		updateCounter(winnerCalc(randomCombo()));
 	}
-	updateProbs();
 }
 
 function randomCombo() {
@@ -105,38 +97,6 @@ function updateCounter(num) {
 	}
 }
 
-
-// Prints probabilities to status page
-function updateProbs() {
-	$("#royal-flush").text(formatNumber(royalFlush));
-	$("#straight-flush").text(formatNumber(straightFlush));
-	$("#four-of-a-kind").text(formatNumber(fourOfKind));
-	$("#full-house").text(formatNumber(fullHouse));
-	$("#flush").text(formatNumber(flush));
-	$("#straight").text(formatNumber(straight));
-	$("#three-of-a-kind").text(formatNumber(threeOfKind));
-	$("#two-pair").text(formatNumber(twoPair));
-	$("#pair").text(formatNumber(pair));
-	$("#high-card").text(formatNumber(highCard));
-	$("#you-win").text(formatNumber(youWin));
-	$("#opp-win").text(formatNumber(oppWin));
-	$("#no-win").text(formatNumber(noWin));
-}
-
-function formatNumber(counter) {
-	var prob;
-	prob = (counter / randomAttempts) * 100;
-	if (prob > 0 && prob < 0.1) {
-		prob = "< 0.1";
-		return prob;
-	}
-	prob = Math.floor( 10 * (counter / randomAttempts) * 100) / 10;
-	return prob;
-	// takes in a number (like royalFlush) and returns the formatted percent chance
-	// basically divides by the randomAttempts, multiplies by 100, and rounds it to the nearest tenth
-	// also, if the final number is 0 but the counter isn't 0
-	// (so it's like between 0 and .1) return "<.1" or something?
-}
 
 // Takes in 7-card combo and returns best hand value
 function bestHand(combo) {
@@ -217,6 +177,7 @@ function handValue(hand) {
 	}
 }
 
+// helper functions for figuring out the hand
 function sameSuit(hand) {
 	if (hand[0] >= 1 && hand[4] <= 13) {
 		return true;
@@ -249,6 +210,8 @@ function isStraight(hand) {
 	}
 }
 
+
+// the tostring (for debugging)
 function printHand(toPrint) {
 	var newPrint = [];
 	for (var i = 0; i < toPrint.length; i++) {

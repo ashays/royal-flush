@@ -1,7 +1,10 @@
+var cards = [0, 0, 0, 0, 0, 0, 0];
+var opponents = 2;
+var randomAttempts = 10000;
+
 var tableCards;
 var selector;
 var selectedCard = 0;
-
 
 $(document).ready(function (){
 	var pattern = Trianglify({
@@ -17,13 +20,15 @@ $(document).ready(function (){
 	$('#selector').fadeOut();
 
 	$(".selector .card").click(function() {
+		if (calculator != undefined) {
+			calculator.terminate();
+			calculator = undefined;	
+			console.log("calculator terminated");
+		}
 		cards[selectedCard] = selector.getActiveIndex();
 		refresh();
 		$('#selector').fadeOut();
-		window.setTimeout(function() {
-			makeCombos();
-			$('.info').css('height', 80);
-		}, 1000);
+		startComputation();
 	});
 
 	$("#cancel-select-btn").click(function() {
@@ -62,10 +67,28 @@ $(document).ready(function (){
 
 });
 
+var calculator;
+
+function startComputation() {
+    if(typeof(Worker) !== "undefined") {
+        if(typeof(calculator) == "undefined") {
+            calculator = new Worker("computation.js");
+            calculator.postMessage(cards);
+            console.log("calculator created");
+        }
+        calculator.onmessage = function(event) {
+        	updateProbs(event.data);
+        	$('.info').css('height', 80);
+        };
+    } else {
+        document.getElementById("winPercents").innerHTML = "Sorry! No Web Worker support.";
+    }
+}
 
 function refresh() {
 	for (var i = 0; i < 7; i++) {
 		num = cards[i];
+		$($(".card")[i]).attr('data-card', num);
 		if (num == 0) {
 			$($(".card")[i]).removeClass('black red').html('<div class="logo">Royal Flush</div>');
 		}
@@ -126,4 +149,37 @@ function getRank(card) {
 			return "K"
 		}
 	}
+}
+
+// Prints probabilities to status page
+function updateProbs(counters) {
+	$("#royal-flush").text(formatNumber(counters[3]));
+	$("#straight-flush").text(formatNumber(counters[4]));
+	$("#four-of-a-kind").text(formatNumber(counters[5]));
+	$("#full-house").text(formatNumber(counters[6]));
+	$("#flush").text(formatNumber(counters[7]));
+	$("#straight").text(formatNumber(counters[8]));
+	$("#three-of-a-kind").text(formatNumber(counters[9]));
+	$("#two-pair").text(formatNumber(counters[10]));
+	$("#pair").text(formatNumber(counters[11]));
+	$("#high-card").text(formatNumber(counters[12]));
+	$("#you-win").text(formatNumber(counters[0]));
+	$("#opp-win").text(formatNumber(counters[1]));
+	$("#no-win").text(formatNumber(counters[2]));
+	console.log("probabilities updated");
+}
+
+function formatNumber(counter) {
+	var prob;
+	prob = (counter / randomAttempts) * 100;
+	if (prob > 0 && prob < 0.1) {
+		prob = "< 0.1";
+		return prob;
+	}
+	prob = Math.floor( 10 * (counter / randomAttempts) * 100) / 10;
+	return prob;
+	// takes in a number (like royalFlush) and returns the formatted percent chance
+	// basically divides by the randomAttempts, multiplies by 100, and rounds it to the nearest tenth
+	// also, if the final number is 0 but the counter isn't 0
+	// (so it's like between 0 and .1) return "<.1" or something?
 }
