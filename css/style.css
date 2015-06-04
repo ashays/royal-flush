@@ -8,6 +8,7 @@
 body {
     font-family: 'caviar_dreamsregular';
     margin: 0;
+    overflow: hidden;
 }
 
 @font-face {
@@ -23,6 +24,7 @@ body {
 
 .background {
     position: absolute;
+    z-index: -99;
 }
 
 .card {
@@ -105,9 +107,12 @@ body {
 
 .table {
     text-align: center;
-    height: 296px;
     width: 100%;
     overflow: hidden;
+}
+
+.table .wrapper {
+    margin: 9px 0px 25px;
 }
 
 .table .wrapper, .selector .wrapper {
@@ -145,16 +150,16 @@ body {
     width: 100%;
     height: 0px;
     transition: height 1s;
+    background-color: rgba(255,255,255,.75);
+    box-shadow: 0px 0px 15px rgba(0,0,0,.15);
 }
 
 .block {
-    background-color: rgba(255,255,255,.75);
     width: 90%;
     max-width: 350px;
     padding: 10px;
-    margin: 0 auto 10px;
-    box-shadow: 0px 0px 15px rgba(0,0,0,.15);
-    font-size: 15px;
+    margin: 0 auto;
+    font-size: 18px;
 }
 
 .block .col {
@@ -167,7 +172,7 @@ body {
     margin-right: 5px;
 }
 
-#handPercents span::after {
+#handPercents span::after, #winPercents span::after {
     content: '%';
 }
 
@@ -182,14 +187,19 @@ body {
     text-transform: lowercase;
 }
 
+#winPercents span {
+    font-size: 30px;
+    display: block;
+}
+
 .selector {
     position: fixed;
     text-align: center;
     width: 100%;
     overflow: hidden;
     top: 50%;
-    height: 350px;
-    margin-top: -175px;
+    height: 356px;
+    margin-top: -178px;
 }
 
 .button {
@@ -203,15 +213,6 @@ body {
     cursor: pointer;
 }
 
-#winPercents span {
-    font-size: 35px;
-    display: block;
-}
-
-#winPercents span::after {
-    content: '%';
-}
-
 .modal::before {
     content: '';
     position: absolute;
@@ -220,4 +221,9 @@ body {
     top: 0;
     left: 0;
     background-color: rgba(0,0,0,.8);
+}
+
+.title {
+    font-size: 25px;
+    color: #fff;
 }

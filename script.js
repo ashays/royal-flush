@@ -51,6 +51,15 @@ $(document).ready(function (){
 	// 		$("#selector").fadeIn(); 			
 	// 	}
 	// });
+
+	$(".info").click(function() {
+		if ($('.info').css('height') == "320px") {
+			$('.info').css('height', 80);
+		} else {
+			$('.info').css('height', 320);
+		}
+	});
+
 });
 
 
