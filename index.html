@@ -15,7 +15,6 @@
 
 	<div class="background"></div>
 	<div class="table selectableCard">
-		<h1>Table</h1>
 		<div class="wrapper">
 			<ul>
 				<li><div class="card black" data-index="0"><img class="suit" src="img/suits/spade.png"><span class="cardValue">K</span><img class="suit" src="img/suits/spade.png"></div></li>
@@ -27,7 +26,6 @@
 		</div>
 	</div>
 	<div class="hand selectableCard">
-		<h2>Hand</h2>
 	<div class="card black" data-index="5">
 			<img class="suit" src="img/suits/club.png"><span class="cardValue">10</span><img class="suit" src="img/suits/club.png">
 		</div>
@@ -65,10 +63,15 @@
 	<div class="modal" id="selector">
 		<div class="selector">
 			<div class="title">Tap to Select a Card</div>
+			<div class="suitNav">
+				<div class="button black" data-goto="1"><img class="suit" src="img/suits/club.png"></div>
+				<div class="button red" data-goto="14"><img class="suit" src="img/suits/diamond.png"></div>
+				<div class="button black" data-goto="27"><img class="suit" src="img/suits/spade.png"></div>
+				<div class="button red" data-goto="40"><img class="suit" src="img/suits/heart.png"></div>
+			</div>
 			<div class="wrapper">
 				<ul></ul>
 			</div>
-			<div class="suitNav"></div>
 			<div class="button" id="cancel-select-btn">Cancel</div>
 		</div>
 	</div>

@@ -57,6 +57,16 @@ $(document).ready(function (){
 		startComputation();
 	});
 
+	$(".suitNav .button").click(function(event) {
+		if ($(event.target).hasClass('button')) {
+			console.log($(event.target).attr("data-goto"));
+			selector.gotoSlide($(event.target).attr("data-goto"));
+		} else {
+			console.log($(event.target).parents('.button').attr('data-goto'));
+			selector.gotoSlide($(event.target).parents('.button').attr("data-goto"));
+		}
+	});
+
 	$("#cancel-select-btn").click(function() {
 		$('#selector').fadeOut();
 		$('.info').css('height', 80);

@@ -196,7 +196,6 @@ body {
     position: fixed;
     text-align: center;
     width: 100%;
-    overflow: hidden;
     top: 50%;
     height: 356px;
     margin-top: -178px;
@@ -244,4 +243,17 @@ body {
 
 .button.disabled {
     opacity: .5;
+}
+
+.suitnav {
+    margin: 10px;
+}
+
+.suitnav .button {
+    width: 70px;
+}
+
+.suitnav .button img {
+  height: 30px;
+  width: 30px;
 }
