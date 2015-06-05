@@ -19,6 +19,30 @@ $(document).ready(function (){
 	refresh();
 	$('#selector').fadeOut();
 
+	$("#decrease-oppenent").click(function() {
+		if !(opponents == 0) {
+			if !($("#decrease-oppenent").hasClass("disabled")) {
+				opponents--;
+				$(#number-opponents).text(opponents);
+			}
+			if (opponents == 0) {
+				$("#decrease-oppenent").addClass("disabled");
+			}
+		}
+	});
+
+	$("#increase-oppenent").click(function() {
+		if (opponents < 5) {
+			if !($("#increase-oppenent").hasClass("disabled")) {
+				opponents++;
+				$(#number-opponents).text(opponents);
+			}
+		}
+		if (opponents == 5) {
+				$("#increase-oppenent").addClass("disabled");
+		}
+	});
+
 	$(".selector .card").click(function() {
 		if (calculator != undefined) {
 			calculator.terminate();
