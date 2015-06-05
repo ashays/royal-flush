@@ -231,3 +231,85 @@ function whatSuit(card) {
 		return "S"
 	}
 }
+
+function handValueToo(hand) {
+	hand.sort(function(a, b){return a-b});
+	var modded = [hand[0]%13, hand[1]%13, hand[2]%13, hand[3]%13, hand[4]%13];
+	modded.sort(function(a, b){return a-b});
+	var calc = modded.slice(0);
+	for (var i = 0; i <= 4; i++) {
+		if (calc[i] == 0 || calc[i] == 1) {
+			calc[i] += 13;
+		}
+	}
+	if (isPair(calc)) {
+        if (isTwoPair(calc)) {
+        	if (isFullHouse(calc)) {
+        		return FULL_HOUSE_VALUE;
+        	}
+        	else if (isFourOfAKind(calc)) {
+                return FOUR_KIND_VALUE;
+        	}
+        	else {
+        		return TWO_PAIR_VALUE;
+        	}
+        }
+        else if (isThreeOfAKind(calc)) {
+        	return THREE_KIND_VALUE;
+        }
+        else {
+        	return PAIR_VALUE;
+        }
+	}
+
+	else if (isStraight(modded)) {
+		if (isFlush(hand)) {
+			return STRAIGHT_FLUSH_VALUE;
+		}
+		else {
+			return STRAIGHT_VALUE;
+		}
+	}
+
+	else if (isFlush(hand)) {
+		return FLUSH_VALUE;
+	}
+	else {
+		return HIGH_CARD_VALUE;
+	}
+}
+
+function isTwoPair(calc) {
+	return ((calc[1] == calc[0] || calc[1] == calc[2]) && (calc[3] == calc[2] || calc[3] == calc[4]));
+}
+
+function isFullHouse(modded) {
+	return (modded[0] == modded[1] && modded[3] == modded[4] && (modded[2] == modded[0] || modded[2] == modded[4]));
+}
+
+function isFourOfAKind(modded) {
+	return (modded[1] == modded[2] && modded[1] == modded[3] && (modded[1] == modded[0] || modded[1] == modded[4]));
+}
+
+function isThreeOfAKind(calc) {
+	return (calc[2] == calc[0] || calc[2] == calc[4] || (calc[2] == calc[3] && calc[2] == calc[1]));
+}
+
+function isPair(calc) {
+	return (calc[0] == calc[1] || calc[1]==calc[2] || calc[2] == calc[3] || calc[3] == calc[4]);
+}
+
+function pairValue(hand) {
+	if (hand[0] == hand[1]) {
+		return PAIR_VALUE_ONE;
+	}
+	else if (hand[1] == hand[2]) {
+		return PAIR_VALUE_TWO;
+	}
+	else if (hand[2] == hand[3]) {
+		return PAIR_VALUE_THREE;
+	}
+	else {
+		return PAIR_VALUE_FOUR;
+	}
+}
