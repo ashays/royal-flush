@@ -19,27 +19,29 @@ $(document).ready(function (){
 	refresh();
 	$('#selector').fadeOut();
 
-	$("#decrease-oppenent").click(function() {
-		if !(opponents == 0) {
-			if !($("#decrease-oppenent").hasClass("disabled")) {
+	$("#decrease-opponent").click(function() {
+		if (!(opponents == 0)) {
+			if (!($("#decrease-opponent").hasClass("disabled"))) {
 				opponents--;
-				$(#number-opponents).text(opponents);
+				$("#increase-opponent").removeClass("disabled");
+				$("#number-opponents").text(opponents);
 			}
 			if (opponents == 0) {
-				$("#decrease-oppenent").addClass("disabled");
+				$("#decrease-opponent").addClass("disabled");
 			}
 		}
 	});
 
-	$("#increase-oppenent").click(function() {
+	$("#increase-opponent").click(function() {
 		if (opponents < 5) {
-			if !($("#increase-oppenent").hasClass("disabled")) {
+			if (!($("#increase-opponent").hasClass("disabled"))) {
 				opponents++;
-				$(#number-opponents).text(opponents);
+				$("#decrease-opponent").removeClass("disabled");
+				$("#number-opponents").text(opponents);
 			}
 		}
 		if (opponents == 5) {
-				$("#increase-oppenent").addClass("disabled");
+				$("#increase-opponent").addClass("disabled");
 		}
 	});
 
